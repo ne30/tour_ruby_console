@@ -7,14 +7,15 @@ tourList = TourList.new
 puts "Welcome to the Tours app."
 
 userId = ""
+gender = ""
 loop do 
     puts "Enter 1 to login and 2 to signup!"
     option = gets.chomp
     # puts option.class
     if option.eql?("1")
-        userId = user.login
+        userId, gender = user.login
     elsif option.eql?("2")
-        userId = user.addUser
+        userId, gender = user.addUser
     else
         puts "Wrong option please try again!"
         next
@@ -27,6 +28,7 @@ end
 
 # p user.fetchUserList
 p userId
+p gender
 
 tours_list = tourList.fetchTourList
 
@@ -59,7 +61,7 @@ loop do
         puts chosen_tour
         # tours_list[count].passenger.push(userId)
         # p tours_list[count]
-        tourList.saveTourList(count, userId)
+        tourList.saveTourList(count, userId, gender)
         break
     end
 end

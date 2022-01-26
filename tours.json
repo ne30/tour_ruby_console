@@ -26,12 +26,12 @@
       "day": "Tuesday",
       "start_time": "10:00",
       "end_time": "20:00",
-      "max_number_of_passenger": 20,
+      "max_number_of_passenger": 19,
       "passenger": [
-        "admin"
+        "neer"
       ],
       "solo_male_passenger": [
-
+        "neer"
       ],
       "solo_female_passenger": [
 

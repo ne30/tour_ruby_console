@@ -10,7 +10,7 @@ class User
 
         CSV.foreach("users.csv") do |row|
             if count >= 1
-                usersInfo[row[0]] = row[1]
+                usersInfo[row[0]] = [row[1], row[2]]
             end
             count = count + 1
         end
@@ -44,13 +44,23 @@ class User
                 if(password.size == 0)
                     next
                 end
+                gender = nil
+                loop do 
+                    puts "Please enter your gender (M or F):"
+                    gender = gets.chomp
+                    if "M".eql?(gender) or "F".eql?(gender)
+                        break
+                    else
+                        puts "Wrong input please try again!"
+                    end
+                end
                 puts password
 
                 CSV.open("users.csv", "ab") do |csv|
-                    csv << [userId, password]
+                    csv << [userId, password,gender]
                 end
                 puts "User Successfully added."
-                return userId
+                return userId, gender
                 
                 break
             else
@@ -75,10 +85,11 @@ class User
                 if usersInfo.key?(userId)
                     # puts password.class
                     # puts usersInfo[userId].class
-                    password2 = usersInfo[userId]
+                    password2 = usersInfo[userId][0]
                     if password2.eql?(password)
                         puts "Login Success"
-                        return userId 
+                        # puts userId, usersInfo[userId][1]
+                        return userId, usersInfo[userId][1]
                         break
                         # return true
                     else
@@ -96,3 +107,9 @@ class User
         end
     end
 end
+
+
+# If not commented it will run as intended before importing 
+# temp = User.new
+
+# temp.login
