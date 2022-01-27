@@ -29,6 +29,7 @@ end
 class TourList
 
     def fetchTour(tour_code)
+        # Fetching exact tour detail
         json = JSON.parse(File.read('data/tours.json'))
         tours =  json["tours"]
 
@@ -42,6 +43,8 @@ class TourList
     end
 
     def fetchTourList
+        # Fetching the tourlist from Json
+
         json = JSON.parse(File.read('data/tours.json'))
 
         tours =  json["tours"]
@@ -63,14 +66,12 @@ class TourList
             temp = Tour.new(tour_code, from, to, day, start_time, end_time, max_number_of_passenger, passenger, solo_male_passenger, solo_female_passenger)
 
             tours_list.push(temp)
-            #puts temp
         end
         return tours_list
     end
 
     def saveTourList(position, userId, gender)
-        # TODO
-        # Add the various conditions
+        #Save the chosem tour for the user
 
         json = JSON.parse(File.read('data/tours.json'))
 
@@ -86,9 +87,6 @@ class TourList
             v = json["tours"][position]["solo_female_passenger"].size 
         end
         
-        
-
-        # puts json
         puts "Do you want a companion/friend during the journey (Y/N)."
         option = gets.chomp
         if option.eql?("Y") || option.eql?("y")
@@ -121,6 +119,7 @@ class TourList
     end
     
     def bookTour(userId, gender)
+        # Book a specific tour inputs
         tours_list = fetchTourList
 
         puts "Here is the list of available tour :"
@@ -149,8 +148,6 @@ class TourList
             else
                 puts "You have chosen :"
                 puts chosen_tour
-                # tours_list[count].passenger.push(userId)
-                # p tours_list[count]
                 saveTourList(count, userId, gender)
                 break
             end

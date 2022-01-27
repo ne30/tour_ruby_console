@@ -6,6 +6,7 @@ class User
     private 
 
     def fetchUserList
+        # Fetching the user list from csv file
         usersInfo = {}
         count = 0
 
@@ -19,6 +20,7 @@ class User
     end
 
     def validate(userId, usersInfo)
+        # Validatio the userId if it is valid i.e. not nil and not similar
         if userId == nil || userId.size == 0
             return false
         elsif usersInfo.key?(userId)
@@ -31,12 +33,12 @@ class User
     public
 
     def addUser
+        # Signup
         usersInfo = fetchUserList
 
         loop do 
             puts "Please enter the new userId to be added"
             userId = gets.chomp
-            # puts userId.class
             puts
 
             if (validate(userId, usersInfo))
@@ -55,7 +57,6 @@ class User
                         puts "Wrong input please try again!"
                     end
                 end
-                puts password
 
                 CSV.open("data/users.csv", "ab") do |csv|
                     csv << [userId, password,gender]
@@ -63,7 +64,6 @@ class User
                 puts "User Successfully added."
                 return userId, gender
                 
-                break
             else
                 puts "The userId already exist. Try again!"
                 puts
@@ -73,6 +73,7 @@ class User
     end
 
     def login
+        # Login
         usersInfo = fetchUserList
         loop do 
             puts "Please enter userID"
@@ -84,18 +85,11 @@ class User
     
             if userId != nil && userId.size != 0
                 if usersInfo.key?(userId)
-                    # puts password.class
-                    # puts usersInfo[userId].class
                     password2 = usersInfo[userId][0]
                     if password2.eql?(password)
                         puts "Login Success"
-                        # puts userId, usersInfo[userId][1]
                         return userId, usersInfo[userId][1]
-                        break
-                        # return true
                     else
-                        # p password2 
-                        # p password
                         puts "Wrong Password!"
                     end
                 else
@@ -109,6 +103,7 @@ class User
     end
 
     def seeUserTicket(userId)
+        # Printing the user booked ticket
         temp_ticket = Ticket.new
         temp_ticket.seeAllTicket(userId)
     end

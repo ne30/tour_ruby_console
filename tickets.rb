@@ -3,8 +3,9 @@ require 'json'
 class Ticket
 
     def saveTicket(userId, tour_code, gender, position)
+        # Function to save ticket to JSON file
+
         json = JSON.parse(File.read('data/tickets.json'))
-        #puts json
 
         if json.key?(userId)
             if json[userId].key?(tour_code)
@@ -18,8 +19,6 @@ class Ticket
             temp_hash = {"gender"=>gender, "position"=>position}
             json[userId] = {tour_code => temp_hash}
         end
-        #puts json
-        #puts JSON.pretty_generate(json)
         File.open("data/tickets.json","w") do |f|
             f.write(JSON.pretty_generate(json))
         end
@@ -28,6 +27,7 @@ class Ticket
     end
 
     def fetchTour(tour_code)
+        # Fetching exact tour
         json = JSON.parse(File.read('data/tours.json'))
         tours =  json["tours"]
 
@@ -41,6 +41,7 @@ class Ticket
     end
 
     def seeAllTicket(userId)
+        # See all the ticket that is booked by a user
         json = JSON.parse(File.read('data/tickets.json'))
         if !json.key?(userId)
             puts "You have not booked any ticket."
