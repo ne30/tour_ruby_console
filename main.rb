@@ -30,38 +30,62 @@ end
 p userId
 p gender
 
-tours_list = tourList.fetchTourList
 
-puts "Here is the list of available tour :"
-puts "TC  : From   => To     : Day"
-puts
-tours_list.each do |tour|
-    puts tour
-end
-
-
-loop do
-    puts "Please enter the tour code (TC) from the above list to book the tour:"
+loop do 
+    puts "Enter 1 to book new tour or 2 to check your tickets"
     option = gets.chomp
-    chosen_tour = nil
-    count = 0
-    #Hash can be used here
-    tours_list.each do |tour|
-        if tour.compareCode(option)
-            chosen_tour = tour
-            break
-        end
-        count = count + 1
+
+    if option.eql?("1")
+        tourList.bookTour(userId,gender)
+    elsif option.eql?("2")
+        user.seeUserTicket(userId)
+    else
+        puts "Wrong choice please try again!"
+        next
     end
 
-    if chosen_tour == nil
-        puts "Wrong Option please try again!"
-    else
-        puts "You have chosen :"
-        puts chosen_tour
-        # tours_list[count].passenger.push(userId)
-        # p tours_list[count]
-        tourList.saveTourList(count, userId, gender)
+    puts 
+    puts "Do you want to exit? (Y/N)"
+    option = gets.chomp
+    if option.eql?("Y") || option.eql?("y")
         break
+    else
+        next
     end
+    # break
 end
+
+# tours_list = tourList.fetchTourList
+
+# puts "Here is the list of available tour :"
+# puts "TC  : From   => To     : Day"
+# puts
+# tours_list.each do |tour|
+#     puts tour
+# end
+
+# loop do
+#     puts "Please enter the tour code (TC) from the above list to book the tour:"
+#     option = gets.chomp
+#     chosen_tour = nil
+#     count = 0
+#     #Hash can be used here
+#     tours_list.each do |tour|
+#         if tour.compareCode(option)
+#             chosen_tour = tour
+#             break
+#         end
+#         count = count + 1
+#     end
+
+#     if chosen_tour == nil
+#         puts "Wrong Option please try again!"
+#     else
+#         puts "You have chosen :"
+#         puts chosen_tour
+#         # tours_list[count].passenger.push(userId)
+#         # p tours_list[count]
+#         tourList.saveTourList(count, userId, gender)
+#         break
+#     end
+# end

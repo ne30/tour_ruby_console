@@ -3,7 +3,7 @@ require 'json'
 class Ticket
 
     def saveTicket(userId, tour_code, gender, position)
-        json = JSON.parse(File.read('tickets.json'))
+        json = JSON.parse(File.read('data/tickets.json'))
         #puts json
 
         if json.key?(userId)
@@ -26,7 +26,7 @@ class Ticket
     end
 
     def fetchTour(tour_code)
-        json = JSON.parse(File.read('tours.json'))
+        json = JSON.parse(File.read('data/tours.json'))
         tours =  json["tours"]
 
         #hash may be used
@@ -39,7 +39,11 @@ class Ticket
     end
 
     def seeAllTicket(userId)
-        json = JSON.parse(File.read('tickets.json'))
+        json = JSON.parse(File.read('data/tickets.json'))
+        if !json.key?(userId)
+            puts "You have not booked any ticket."
+            return
+        end
         ticket_list_hash = json[userId]
 
         ticket_list_hash.each do |key,val|

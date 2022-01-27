@@ -29,7 +29,7 @@ end
 class TourList
 
     def fetchTour(tour_code)
-        json = JSON.parse(File.read('tours.json'))
+        json = JSON.parse(File.read('data/tours.json'))
         tours =  json["tours"]
 
         #hash may be used
@@ -42,7 +42,7 @@ class TourList
     end
 
     def fetchTourList
-        json = JSON.parse(File.read('tours.json'))
+        json = JSON.parse(File.read('data/tours.json'))
 
         tours =  json["tours"]
 
@@ -72,7 +72,7 @@ class TourList
         # TODO
         # Add the various conditions
 
-        json = JSON.parse(File.read('tours.json'))
+        json = JSON.parse(File.read('data/tours.json'))
 
         if json["tours"][position]["max_number_of_passenger"] == 0
             return
@@ -114,10 +114,47 @@ class TourList
         end
         json["tours"][position]["passenger"].push(userId)
         json["tours"][position]["max_number_of_passenger"] -= 1
-        File.open("tours.json","w") do |f|
+        File.open("data/tours.json","w") do |f|
             f.write(JSON.pretty_generate(json))
         end
-    end    
+    end
+    
+    def bookTour(userId, gender)
+        tours_list = fetchTourList
+
+        puts "Here is the list of available tour :"
+        puts "TC  : From   => To     : Day"
+        puts
+        tours_list.each do |tour|
+            puts tour
+        end
+
+        loop do
+            puts "Please enter the tour code (TC) from the above list to book the tour:"
+            option = gets.chomp
+            chosen_tour = nil
+            count = 0
+            #Hash can be used here
+            tours_list.each do |tour|
+                if tour.compareCode(option)
+                    chosen_tour = tour
+                    break
+                end
+                count = count + 1
+            end
+
+            if chosen_tour == nil
+                puts "Wrong Option please try again!"
+            else
+                puts "You have chosen :"
+                puts chosen_tour
+                # tours_list[count].passenger.push(userId)
+                # p tours_list[count]
+                saveTourList(count, userId, gender)
+                break
+            end
+        end
+    end
 end
 
 # t = TourList.new

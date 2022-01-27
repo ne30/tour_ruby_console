@@ -1,4 +1,5 @@
 require 'csv'
+require './tickets'
 
 class User
 
@@ -8,7 +9,7 @@ class User
         usersInfo = {}
         count = 0
 
-        CSV.foreach("users.csv") do |row|
+        CSV.foreach("data/users.csv") do |row|
             if count >= 1
                 usersInfo[row[0]] = [row[1], row[2]]
             end
@@ -56,7 +57,7 @@ class User
                 end
                 puts password
 
-                CSV.open("users.csv", "ab") do |csv|
+                CSV.open("data/users.csv", "ab") do |csv|
                     csv << [userId, password,gender]
                 end
                 puts "User Successfully added."
@@ -106,6 +107,12 @@ class User
             end
         end
     end
+
+    def seeUserTicket(userId)
+        temp_ticket = Ticket.new
+        temp_ticket.seeAllTicket(userId)
+    end
+
 end
 
 

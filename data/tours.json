@@ -7,13 +7,16 @@
       "day": "Monday",
       "start_time": "18:00",
       "end_time": "20:00",
-      "max_number_of_passenger": 50,
+      "max_number_of_passenger": 48,
       "passenger": [
         "admin",
-        "neer"
+        "neer",
+        "admin2",
+        "admin2"
       ],
       "solo_male_passenger": [
-
+        "admin2",
+        "admin2"
       ],
       "solo_female_passenger": [
 
@@ -26,12 +29,14 @@
       "day": "Tuesday",
       "start_time": "10:00",
       "end_time": "20:00",
-      "max_number_of_passenger": 19,
+      "max_number_of_passenger": 18,
       "passenger": [
-        "neer"
+        "neer",
+        "admin"
       ],
       "solo_male_passenger": [
-        "neer"
+        "neer",
+        "admin"
       ],
       "solo_female_passenger": [
 
