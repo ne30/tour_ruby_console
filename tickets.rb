@@ -22,7 +22,6 @@ class Ticket
         File.open("data/tickets.json","w") do |f|
             f.write(JSON.pretty_generate(json))
         end
-        puts json[userId].keys
         return true
     end
 
@@ -51,24 +50,24 @@ class Ticket
 
         ticket_list_hash.each do |key,val|
             if val["position"] == -1
-                temp = fetchTour(key)
-                puts temp["tour_code"] + " : " + temp["from"] + " => " + temp["to"] + " : " + temp["day"]        
+                temp_tour = fetchTour(key)
+                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]        
             else
-                temp = fetchTour(key)
-                puts temp["tour_code"] + " : " + temp["from"] + " => " + temp["to"] + " : " + temp["day"]        
+                temp_tour = fetchTour(key)
+                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]        
                 if val["position"].even?
-                    if ticket_list_hash[key]["gender"].eql?("M") && temp["solo_male_passenger"].size.even?
-                        puts "Your companion userId is :" + temp["solo_male_passenger"][val["position"]+1]
-                    elsif ticket_list_hash[key]["gender"].eql?("F") && temp["solo_female_passenger"].size.even?
-                        puts "Your companion userId is :" + temp["solo_female_passenger"][val["position"]+1]
+                    if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
+                        puts "Your companion userId is :" + temp_tour["solo_male_passenger"][val["position"]+1]
+                    elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
+                        puts "Your companion userId is :" + temp_tour["solo_female_passenger"][val["position"]+1]
                     else
                         puts "There is no companion available for you at the moment!"
                     end
                 else
-                    if ticket_list_hash[key]["gender"].eql?("M") && temp["solo_male_passenger"].size.even?
-                        puts "Your companion userId is :" + temp["solo_male_passenger"][val["position"]-1]
-                    elsif ticket_list_hash[key]["gender"].eql?("F") && temp["solo_female_passenger"].size.even?
-                        puts "Your companion userId is :" + temp["solo_female_passenger"][val["position"]-1]
+                    if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
+                        puts "Your companion userId is :" + temp_tour["solo_male_passenger"][val["position"]-1]
+                    elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
+                        puts "Your companion userId is :" + temp_tour["solo_female_passenger"][val["position"]-1]
                     else
                         puts "There is no companion available for you at the moment!"
                     end
@@ -81,4 +80,4 @@ end
 
 # temp = Ticket.new
 
-# temp.saveTicket("admin2","001","M",-1)
+# temp.seeAllTicket("neer")

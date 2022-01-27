@@ -76,23 +76,24 @@ class TourList
         json = JSON.parse(File.read('data/tours.json'))
 
         if json["tours"][position]["max_number_of_passenger"] == 0
+            puts "Tour is completely booked."
             return
         end
 
         temp_ticket = Ticket.new
-        v = 0
+        solo_size = 0
         if gender.eql?("M")
-            v = json["tours"][position]["solo_male_passenger"].size
+            solo_size = json["tours"][position]["solo_male_passenger"].size
         else
-            v = json["tours"][position]["solo_female_passenger"].size 
+            solo_size = json["tours"][position]["solo_female_passenger"].size 
         end
         
         puts "Do you want a companion/friend during the journey (Y/N)."
         option = gets.chomp
         if option.eql?("Y") || option.eql?("y")
             
-            val = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, v)
-            if val == false
+            ticket_status = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, solo_size)
+            if ticket_status == false
                 return
             end
 
@@ -105,8 +106,8 @@ class TourList
             puts "Your choice is saved."
         
         else
-            val = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, -1)
-            if val == false
+            ticket_status = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, -1)
+            if ticket_status == false
                 return
             end
             puts "No companion chosen."

@@ -15,6 +15,7 @@ loop do
         userId, gender = user.login
     elsif option.eql?("2")
         userId, gender = user.addUser
+        next
     else
         puts "Wrong option please try again!"
         next
@@ -24,10 +25,6 @@ loop do
         break
     end
 end
-
-p userId
-p gender
-
 
 loop do 
     puts "Enter 1 to book new tour or 2 to check your tickets"
