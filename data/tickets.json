@@ -10,5 +10,11 @@
       "gender": "M",
       "position": 1
     }
+  },
+  "admin2": {
+    "001": {
+      "gender": "M",
+      "position": -1
+    }
   }
 }

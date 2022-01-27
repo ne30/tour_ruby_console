@@ -18,10 +18,12 @@ class Ticket
             temp_hash = {"gender"=>gender, "position"=>position}
             json[userId] = {tour_code => temp_hash}
         end
-        File.open("tickets.json","w") do |f|
+        #puts json
+        #puts JSON.pretty_generate(json)
+        File.open("data/tickets.json","w") do |f|
             f.write(JSON.pretty_generate(json))
         end
-        puts json.keys
+        puts json[userId].keys
         return true
     end
 
@@ -78,4 +80,4 @@ end
 
 # temp = Ticket.new
 
-# temp.seeAllTicket("neer")
+# temp.saveTicket("admin2","001","M",-1)

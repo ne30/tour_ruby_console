@@ -86,6 +86,7 @@ class TourList
             v = json["tours"][position]["solo_female_passenger"].size 
         end
         
+        
 
         # puts json
         puts "Do you want a companion/friend during the journey (Y/N)."
