@@ -13,23 +13,23 @@ class User
 
     def fetchUserList
         # Fetching the user list from csv file
-        usersInfo = {}
+        users_info = {}
         count = 0
 
         CSV.foreach("data/users.csv") do |row|
             if count >= 1
-                usersInfo[row[0]] = [row[1], row[2]]
+                users_info[row[0]] = [row[1], row[2]]
             end
             count = count + 1
         end
-        return usersInfo
+        return users_info
     end
 
-    def validate(userId, usersInfo)
+    def validate(userId, users_info)
         # Validatio the userId if it is valid i.e. not nil and not similar
         if userId == nil || userId.size == 0
             return false
-        elsif usersInfo.key?(userId)
+        elsif users_info.key?(userId)
             return false
         else
             return true
@@ -40,7 +40,7 @@ class User
 
     def addUser
         # Signup
-        usersInfo = fetchUserList
+        users_info = fetchUserList
 
         loop do 
             puts "Please enter the new userId to be added".blue
@@ -53,7 +53,7 @@ class User
                 puts
                 next
             end
-            if (validate(userId, usersInfo))
+            if (validate(userId, users_info))
                 puts "Now please enter the password for the user.".blue
                 puts
                 password = gets_password
@@ -76,7 +76,7 @@ class User
                 end
 
                 CSV.open("data/users.csv", "ab") do |csv|
-                    csv << [userId, password,gender]
+                    csv << [userId, password, gender]
                 end
                 puts "User Successfully added.".green
                 puts
@@ -92,7 +92,7 @@ class User
 
     def login
         # Login
-        usersInfo = fetchUserList
+        users_info = fetchUserList
         loop do 
             puts "Please enter userID".blue
             puts
@@ -104,12 +104,12 @@ class User
             puts
     
             if userId != nil && userId.size != 0
-                if usersInfo.key?(userId)
-                    password2 = usersInfo[userId][0]
-                    if password2.eql?(password)
+                if users_info.key?(userId)
+                    stored_password = users_info[userId][0]
+                    if stored_password.eql?(password)
                         puts "Login Success".green
                         puts
-                        return userId, usersInfo[userId][1]
+                        return userId, users_info[userId][1]
                     else
                         puts "Wrong Password!".red
                     end
@@ -129,7 +129,31 @@ class User
         temp_ticket.seeAllTicket(userId)
     end
 
-    def loginAdmin()
+    def adminOption
+        loop do 
+            puts "Enter 1 to see all tours, 2 to see all booked ticket or 3 to exit from these options".yellow
+            puts
+            option = gets.chomp
+            puts
+            if option.eql?("1")
+                TourList.printAllTour
+                next
+            elsif option.eql?("2")
+                Ticket.new.printAllTicket
+                next
+            elsif option.eql?("3")
+                puts "You are going back in the main application!".blue
+                puts
+                return
+            else
+                puts "Wrong option please try again!".red
+                puts
+                next 
+            end
+        end
+    end
+
+    def loginAdmin
         loop do 
             puts "Please enter userID".blue
             puts
@@ -141,30 +165,7 @@ class User
             puts
 
             if "admin".eql?(userId) && "admin".eql?(password)
-                loop do 
-                    puts "Enter 1 to see all tours, 2 to see all booked ticket or 3 to exit from these options".yellow
-                    puts
-                    option = gets.chomp
-                    puts
-                    if option.eql?("1")
-                        tourList = TourList.new
-                        tourList.printAllTour
-                        next
-                    elsif option.eql?("2")
-                        # puts "here"
-                        ticket = Ticket.new
-                        ticket.printAllTicket
-                        next
-                    elsif option.eql?("3")
-                        puts "YOu are going back in the main application!".blue
-                        puts
-                        return
-                    else
-                        puts "Wrong option please try again!".red
-                        puts
-                        next 
-                    end
-                end
+                return true
             else
                 puts "Wrong Credentials! Try again!".red
                 puts

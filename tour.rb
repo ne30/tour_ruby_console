@@ -43,7 +43,7 @@ class TourList
         return nil
     end
 
-    def fetchTourList
+    def self.fetchTourList
         # Fetching the tourlist from Json
 
         json = JSON.parse(File.read('data/tours.json'))
@@ -71,8 +71,8 @@ class TourList
         return tours_list
     end
 
-    def printAllTour
-        tour_list = fetchTourList
+    def self.printAllTour
+        tour_list = TourList.fetchTourList
         puts "| TC  : From  => To      :  Day   : Reaminig Ticket".blue
         puts ("--------------------------------------------------------------")
         tour_list.each do |tour|
@@ -142,19 +142,13 @@ class TourList
     
     def bookTour(userId, gender)
         # Book a specific tour inputs
-        tours_list = fetchTourList
+        tours_list = TourList.fetchTourList
 
         puts "Here is the list of available tour :".green
         puts
-        puts ("--------------------------------------------------------------")
-        puts "| TC  : From  => To      :  Day   : Reaminig Ticket".blue
-        puts ("--------------------------------------------------------------")
-        tours_list.each do |tour|
-            print "| "
-            puts tour
-            puts ("--------------------------------------------------------------")
-        end
-        puts
+
+        TourList.printAllTour
+
         loop do
             puts "Please enter the tour code (TC) from the above list to book the tour:".yellow
             puts

@@ -21,9 +21,12 @@ loop do
         userId, gender = user.addUser
         next
     elsif option.eql?("3")
-        user.loginAdmin
-        userId = "admin"
-        gender = "M"
+        login_status = user.loginAdmin
+        if login_status == true 
+            userId = "admin"
+            gender = "M" 
+            user.adminOption
+        end
         break
     else
         puts "Wrong option please try again!".red
