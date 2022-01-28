@@ -2,9 +2,5 @@ UserId,Password,Gender
 admin,admin,M
 usera,passa,F
 neer,neer,M
-neer2,neer2,F
-test,test,M
-user3,user3,F
-neer4,neer4,M
-admin2,admin2,M
-newuser,newuser,M
+admin2,admin2,F
+admin3,admin3,F

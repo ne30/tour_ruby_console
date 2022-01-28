@@ -1,5 +1,8 @@
 require 'csv'
-require './tickets'
+require './ticket'
+require 'fancy_gets'
+
+include FancyGets
 
 class User
 
@@ -37,35 +40,42 @@ class User
         usersInfo = fetchUserList
 
         loop do 
-            puts "Please enter the new userId to be added"
+            puts "Please enter the new userId to be added".blue
+            puts
             userId = gets.chomp
             puts
 
             if (validate(userId, usersInfo))
-                puts "Now please enter the password for the user."
-                password = gets.chomp
+                puts "Now please enter the password for the user.".blue
+                puts
+                password = gets_password
+                puts
                 if(password.size == 0)
                     next
                 end
                 gender = nil
                 loop do 
-                    puts "Please enter your gender (M or F):"
+                    puts "Please enter your gender (M or F):".blue
+                    puts
                     gender = gets.chomp
+                    puts
                     if "M".eql?(gender) or "F".eql?(gender)
                         break
                     else
-                        puts "Wrong input please try again!"
+                        puts "Wrong input please try again!".red
+                        puts
                     end
                 end
 
                 CSV.open("data/users.csv", "ab") do |csv|
                     csv << [userId, password,gender]
                 end
-                puts "User Successfully added."
+                puts "User Successfully added.".green
+                puts
                 return userId, gender
                 
             else
-                puts "The userId already exist. Try again!"
+                puts "The userId already exist. Try again!".red
                 puts
             end
         end
@@ -76,28 +86,31 @@ class User
         # Login
         usersInfo = fetchUserList
         loop do 
-            puts "Please enter userID"
+            puts "Please enter userID".blue
+            puts
             userId = gets.chomp
             puts
-            puts "Please enter password"
-            password = gets.chomp
+            puts "Please enter password".blue
+            puts
+            password = gets_password
             puts
     
             if userId != nil && userId.size != 0
                 if usersInfo.key?(userId)
                     password2 = usersInfo[userId][0]
                     if password2.eql?(password)
-                        puts "Login Success"
+                        puts "Login Success".green
+                        puts
                         return userId, usersInfo[userId][1]
                     else
-                        puts "Wrong Password!"
+                        puts "Wrong Password!".red
                     end
                 else
-                    puts "No such user exist!"
+                    puts "No such user exist!".red
                     puts
                 end
             else
-                puts "Please try again!"
+                puts "Please try again!".red
             end
         end
     end

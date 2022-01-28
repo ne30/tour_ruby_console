@@ -6,7 +6,7 @@
     },
     "002": {
       "gender": "M",
-      "position": 4
+      "position": -1
     }
   },
   "admin": {
@@ -19,28 +19,10 @@
       "position": 1
     }
   },
-  "newuser": {
-    "002": {
-      "gender": "M",
-      "position": 1
-    }
-  },
-  "usera": {
-    "002": {
+  "admin3": {
+    "001": {
       "gender": "F",
       "position": 0
-    }
-  },
-  "test": {
-    "002": {
-      "gender": "M",
-      "position": 2
-    }
-  },
-  "neer4": {
-    "002": {
-      "gender": "M",
-      "position": 3
     }
   }
 }

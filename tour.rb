@@ -1,5 +1,5 @@
 require 'json'
-require './tickets'
+require './ticket'
 
 class Tour
     attr_reader :tour_code, :from, :to, :day, :start_time, :end_time, :max_number_of_passenger, :passenger, :solo_male_passenger, :solo_female_passenger
@@ -76,7 +76,9 @@ class TourList
         json = JSON.parse(File.read('data/tours.json'))
 
         if json["tours"][position]["max_number_of_passenger"] == 0
-            puts "Tour is completely booked."
+            puts
+            puts "Tour is completely booked.".red
+            puts
             return
         end
 
@@ -87,9 +89,12 @@ class TourList
         else
             solo_size = json["tours"][position]["solo_female_passenger"].size 
         end
-        
-        puts "Do you want a companion/friend during the journey (Y/N)."
+
+        puts
+        puts "Do you want a companion/friend during the journey (Y/N).".blue
+        puts
         option = gets.chomp
+        puts
         if option.eql?("Y") || option.eql?("y")
             
             ticket_status = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, solo_size)
@@ -102,15 +107,18 @@ class TourList
             else
                 json["tours"][position]["solo_female_passenger"].push(userId) 
             end
-            
-            puts "Your choice is saved."
+            puts
+            puts "Your choice is saved.".green
+            puts
         
         else
             ticket_status = temp_ticket.saveTicket(userId, json["tours"][position]["tour_code"], gender, -1)
             if ticket_status == false
                 return
             end
-            puts "No companion chosen."
+            puts
+            puts "No companion chosen.".yellow
+            puts
         end
         json["tours"][position]["passenger"].push(userId)
         json["tours"][position]["max_number_of_passenger"] -= 1
@@ -123,16 +131,20 @@ class TourList
         # Book a specific tour inputs
         tours_list = fetchTourList
 
-        puts "Here is the list of available tour :"
+        puts "Here is the list of available tour :".green
+        puts
         puts "TC  : From   => To     : Day"
         puts
         tours_list.each do |tour|
             puts tour
+            puts
         end
 
         loop do
-            puts "Please enter the tour code (TC) from the above list to book the tour:"
+            puts "Please enter the tour code (TC) from the above list to book the tour:".blue
+            puts
             option = gets.chomp
+            puts
             chosen_tour = nil
             count = 0
             #Hash can be used here
@@ -145,10 +157,13 @@ class TourList
             end
 
             if chosen_tour == nil
-                puts "Wrong Option please try again!"
+                puts "Wrong Option please try again!".red
+                puts
             else
-                puts "You have chosen :"
+                puts "You have chosen :".green
+                puts
                 puts chosen_tour
+                puts
                 saveTourList(count, userId, gender)
                 break
             end

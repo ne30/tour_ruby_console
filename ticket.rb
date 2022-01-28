@@ -9,7 +9,8 @@ class Ticket
 
         if json.key?(userId)
             if json[userId].key?(tour_code)
-                puts "You already booked this tour ticket!"
+                puts "You already booked this tour ticket!".green
+                puts
                 return false
             else
                 temp_hash = {"gender"=>gender, "position"=>position}
@@ -43,7 +44,7 @@ class Ticket
         # See all the ticket that is booked by a user
         json = JSON.parse(File.read('data/tickets.json'))
         if !json.key?(userId)
-            puts "You have not booked any ticket."
+            puts "You have not booked any ticket.".red
             return
         end
         ticket_list_hash = json[userId]
@@ -51,27 +52,30 @@ class Ticket
         ticket_list_hash.each do |key,val|
             if val["position"] == -1
                 temp_tour = fetchTour(key)
-                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]        
+                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]   
+                puts     
             else
                 temp_tour = fetchTour(key)
-                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]        
+                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]    
+                puts    
                 if val["position"].even?
                     if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
-                        puts "Your companion userId is :" + temp_tour["solo_male_passenger"][val["position"]+1]
+                        puts "Your companion userId is : ".green + temp_tour["solo_male_passenger"][val["position"]+1].green
                     elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
-                        puts "Your companion userId is :" + temp_tour["solo_female_passenger"][val["position"]+1]
+                        puts "Your companion userId is : ".green + temp_tour["solo_female_passenger"][val["position"]+1].green
                     else
-                        puts "There is no companion available for you at the moment!"
+                        puts "There is no companion available for you at the moment!".red
                     end
                 else
                     if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
-                        puts "Your companion userId is :" + temp_tour["solo_male_passenger"][val["position"]-1]
+                        puts "Your companion userId is : ".green + temp_tour["solo_male_passenger"][val["position"]-1].green
                     elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
-                        puts "Your companion userId is :" + temp_tour["solo_female_passenger"][val["position"]-1]
+                        puts "Your companion userId is : ".green + temp_tour["solo_female_passenger"][val["position"]-1].green
                     else
-                        puts "There is no companion available for you at the moment!"
+                        puts "There is no companion available for you at the moment!".red
                     end
                 end
+                puts
             end
         end
     end
