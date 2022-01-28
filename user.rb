@@ -1,6 +1,9 @@
 require 'csv'
-require './ticket'
 require 'fancy_gets'
+require 'colorize'
+
+require './ticket'
+require './tour'
 
 include FancyGets
 
@@ -45,6 +48,11 @@ class User
             userId = gets.chomp
             puts
 
+            if userId.size <= 2
+                puts "Please enter userId of size greater than 3!".red
+                puts
+                next
+            end
             if (validate(userId, usersInfo))
                 puts "Now please enter the password for the user.".blue
                 puts
@@ -121,6 +129,49 @@ class User
         temp_ticket.seeAllTicket(userId)
     end
 
+    def loginAdmin()
+        loop do 
+            puts "Please enter userID".blue
+            puts
+            userId = gets.chomp
+            puts
+            puts "Please enter password".blue
+            puts
+            password = gets_password
+            puts
+
+            if "admin".eql?(userId) && "admin".eql?(password)
+                loop do 
+                    puts "Enter 1 to see all tours, 2 to see all booked ticket or 3 to exit from these options".yellow
+                    puts
+                    option = gets.chomp
+                    puts
+                    if option.eql?("1")
+                        tourList = TourList.new
+                        tourList.printAllTour
+                        next
+                    elsif option.eql?("2")
+                        # puts "here"
+                        ticket = Ticket.new
+                        ticket.printAllTicket
+                        next
+                    elsif option.eql?("3")
+                        puts "YOu are going back in the main application!".blue
+                        puts
+                        return
+                    else
+                        puts "Wrong option please try again!".red
+                        puts
+                        next 
+                    end
+                end
+            else
+                puts "Wrong Credentials! Try again!".red
+                puts
+                next
+            end
+        end
+    end
 end
 
 

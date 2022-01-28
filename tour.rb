@@ -1,5 +1,6 @@
 require 'json'
 require './ticket'
+require 'colorize'
 
 class Tour
     attr_reader :tour_code, :from, :to, :day, :start_time, :end_time, :max_number_of_passenger, :passenger, :solo_male_passenger, :solo_female_passenger
@@ -18,7 +19,7 @@ class Tour
     end
 
     def to_s 
-        @tour_code.to_s + " : " + @from.to_s + " => " + @to.to_s + " : " + @day.to_s 
+        @tour_code.to_s.green + " : " + @from.to_s + " => " + @to.to_s + " : " + @day.to_s + " : " + "Remaining Ticket ".green + "=> " + @max_number_of_passenger.to_s.green
     end 
 
     def compareCode(tour_code)
@@ -70,6 +71,18 @@ class TourList
         return tours_list
     end
 
+    def printAllTour
+        tour_list = fetchTourList
+        puts "| TC  : From  => To      :  Day   : Reaminig Ticket".blue
+        puts ("--------------------------------------------------------------")
+        tour_list.each do |tour|
+            print "| "
+            puts tour
+            puts ("--------------------------------------------------------------")
+        end
+        puts
+    end
+
     def saveTourList(position, userId, gender)
         #Save the chosem tour for the user
 
@@ -91,7 +104,7 @@ class TourList
         end
 
         puts
-        puts "Do you want a companion/friend during the journey (Y/N).".blue
+        puts "Do you want a companion/friend during the journey (Y/N).".yellow
         puts
         option = gets.chomp
         puts
@@ -133,15 +146,17 @@ class TourList
 
         puts "Here is the list of available tour :".green
         puts
-        puts "TC  : From   => To     : Day"
-        puts
+        puts ("--------------------------------------------------------------")
+        puts "| TC  : From  => To      :  Day   : Reaminig Ticket".blue
+        puts ("--------------------------------------------------------------")
         tours_list.each do |tour|
+            print "| "
             puts tour
-            puts
+            puts ("--------------------------------------------------------------")
         end
-
+        puts
         loop do
-            puts "Please enter the tour code (TC) from the above list to book the tour:".blue
+            puts "Please enter the tour code (TC) from the above list to book the tour:".yellow
             puts
             option = gets.chomp
             puts

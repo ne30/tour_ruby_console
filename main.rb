@@ -11,7 +11,7 @@ puts
 userId = ""
 gender = ""
 loop do 
-    puts "Enter 1 to login and 2 to signup!".yellow
+    puts "Enter 1 to login, 2 to signup and 3 for admin access!".yellow
     puts
     option = gets.chomp
     puts
@@ -20,6 +20,11 @@ loop do
     elsif option.eql?("2")
         userId, gender = user.addUser
         next
+    elsif option.eql?("3")
+        user.loginAdmin
+        userId = "admin"
+        gender = "M"
+        break
     else
         puts "Wrong option please try again!".red
         puts

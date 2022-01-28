@@ -1,4 +1,5 @@
 require 'json'
+require 'colorize'
 
 class Ticket
 
@@ -40,6 +41,13 @@ class Ticket
         return nil
     end
 
+    def printAllTicket
+        json = JSON.parse(File.read('data/tickets.json'))
+        json.each do |key, val|
+            seeAllTicket(key)
+        end
+    end
+
     def seeAllTicket(userId)
         # See all the ticket that is booked by a user
         json = JSON.parse(File.read('data/tickets.json'))
@@ -47,41 +55,52 @@ class Ticket
             puts "You have not booked any ticket.".red
             return
         end
+        puts "Here is a list of ".blue + userId.green + " booked ticket.".blue
+        puts
         ticket_list_hash = json[userId]
-
+        count = 1
         ticket_list_hash.each do |key,val|
+            companion = "-"
             if val["position"] == -1
                 temp_tour = fetchTour(key)
-                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]   
-                puts     
+                printTicket(temp_tour,count,companion)     
             else
-                temp_tour = fetchTour(key)
-                puts temp_tour["tour_code"] + " : " + temp_tour["from"] + " => " + temp_tour["to"] + " : " + temp_tour["day"]    
-                puts    
+                temp_tour = fetchTour(key)  
                 if val["position"].even?
                     if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
-                        puts "Your companion userId is : ".green + temp_tour["solo_male_passenger"][val["position"]+1].green
+                        companion = temp_tour["solo_male_passenger"][val["position"]+1]
                     elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
-                        puts "Your companion userId is : ".green + temp_tour["solo_female_passenger"][val["position"]+1].green
-                    else
-                        puts "There is no companion available for you at the moment!".red
+                        companion = temp_tour["solo_female_passenger"][val["position"]+1]
                     end
                 else
                     if ticket_list_hash[key]["gender"].eql?("M") && temp_tour["solo_male_passenger"].size.even?
-                        puts "Your companion userId is : ".green + temp_tour["solo_male_passenger"][val["position"]-1].green
+                        companion = temp_tour["solo_male_passenger"][val["position"]-1]
                     elsif ticket_list_hash[key]["gender"].eql?("F") && temp_tour["solo_female_passenger"].size.even?
-                        puts "Your companion userId is : ".green + temp_tour["solo_female_passenger"][val["position"]-1].green
-                    else
-                        puts "There is no companion available for you at the moment!".red
+                        companion = temp_tour["solo_female_passenger"][val["position"]-1]
                     end
                 end
-                puts
+                printTicket(temp_tour,count,companion)
             end
+            count += 1
         end
     end
-    
+
+    def printTicket(tour, counter,companion)
+        puts "------------------------------------------------"
+        puts "| Serial Number => ".green + counter.to_s.green
+        puts "| Tour Code     => ".yellow + tour["tour_code"]
+        puts "| From          => ".yellow + tour["from"]
+        puts "| To            => ".yellow + tour["to"]
+        puts "| Day           => ".yellow + tour["day"]
+        puts "| Dep Time      => ".yellow + tour["start_time"]
+        puts "| Arr Time      => ".yellow + tour["end_time"]
+        puts "| Companion     => ".yellow + companion
+        puts "------------------------------------------------"
+        puts 
+    end
 end
 
 # temp = Ticket.new
 
-# temp.seeAllTicket("neer")
+# temp.seeAllTicket("admin")
+

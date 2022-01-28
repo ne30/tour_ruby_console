@@ -3,10 +3,6 @@
     "001": {
       "gender": "M",
       "position": 0
-    },
-    "002": {
-      "gender": "M",
-      "position": -1
     }
   },
   "admin": {
@@ -17,12 +13,6 @@
     "001": {
       "gender": "M",
       "position": 1
-    }
-  },
-  "admin3": {
-    "001": {
-      "gender": "F",
-      "position": 0
     }
   }
 }
